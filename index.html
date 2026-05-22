@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AC Bienes Raíces – Tu Hogar, Nuestra Passion</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+  <style>
+    :root {
+      --rojo:       #C32018;
+      --rojo-hover: #A81B13;
+      --rojo-light: rgb(216, 21, 21);
+      --blanco:     #F5F5F5;
+      --negro:      #000000;
+      --gris:       #555555;
+      --gris-claro: #cdcaca;
+      --verde-whatsapp: #25D366;
+      --fuente-display: 'Cormorant Garamond', Georgia, serif;
+      --fuente-body:    'DM Sans', sans-serif;
+      --radio:      4px;
+      --sombra:     0 8px 32px rgba(0,0,0,0.12);
+      --transicion: 0.3s ease;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--fuente-body);
+      background: var(--blanco);
+      color: var(--negro);
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+    img { display: block; max-width: 100%; }
+    a   { text-decoration: none; color: inherit; }
+    ul  { list-style: none; }
+    .linea-roja {
+      display: block;
+      width: 48px;
+      height: 3px;
+      background: var(--rojo);
+      margin: 12px 0 20px;
+    }
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      width: 60px;
+      height: 60px;
+      background: var(--verde-whatsapp);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      z-index: 500;
+      cursor: pointer;
+      transition: transform var(--transicion), box-shadow var(--transicion);
+      text-decoration: none;
+    }
+    .whatsapp-btn:hover {
+      transform: scale(1.1);
+      box-shadow: 0 6px 28px rgba(37, 211, 102, 0.6);
+    }
+    .whatsapp-btn i {
+      font-size: 28px;
+      color: var(--blanco);
+    }
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 5%;
+      background: transparent;
+      transition: background var(--transicion), padding var(--transicion), box-shadow var(--transicion);
+    }
+    header.scrolled {
+      background: var(--negro);
+      padding: 14px 5%;
+      box-shadow: 0 2px 20px rgba(0,0,0,0.35);
+    }
+    .logo {
+      font-family: var(--fuente-display);
+      font-size: clamp(1.3rem, 3vw, 1.7rem);
+      font-weight: 700;
+      color: var(--gris-claro);
+      letter-spacing: 0.02em;
+      line-height: 1.1;
+    }
+    .logo span {
+      display: block;
+      font-size: 0.5em;
+      font-weight: 300;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gris-claro);
+    }
+    .nav-links {
+      display: flex;
+      gap: 26px;
+    }
+    .nav-links a {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      position: relative;
+      padding-bottom: 4px;
+      transition: color var(--transicion);
+    }
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      bottom: 0; left: 0;
+      width: 0; height: 2px;
+      background: var(--rojo);
+      transition: width var(--transicion);
+    }
+    .nav-links a:hover { color: var(--rojo); }
+    .nav-links a:hover::after { width: 100%; }
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 26px; height: 2px;
+      background: var(--blanco);
+      transition: transform var(--transicion), opacity var(--transicion);
+    }
+    .hamburger.abierto span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.abierto span:nth-child(2) { opacity: 0; }
+    .hamburger.abierto span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+    .nav-mobile {
+      display: none;
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: var(--negro);
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 32px;
+      z-index: 999;
+    }
+    .nav-mobile.visible { display: flex; }
+    .nav-mobile a {
+      font-family: var(--fuente-display);
+      font-size: clamp(1.6rem, 6vw, 2.4rem);
+      color: var(--blanco);
+      letter-spacing: 0.04em;
+      transition: color var(--transicion);
+    }
+    .nav-mobile a:hover { color: var(--rojo); }
+    .nav-mobile .cerrar {
+      position: absolute;
+      top: 22px; right: 5%;
+      font-size: 2rem;
+      color: var(--blanco);
+      cursor: pointer;
+      background: none;
+      border: none;
+    }
+    #inicio {
+      position: relative;
+      height: 100vh;
+      min-height: 600px;
+      display: flex;
+      align-items: flex-end;
+      padding: 0 5% 8%;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=1800&q=80');
+      background-size: cover;
+      background-position: center;
+      transform: scale(1.05);
+      transition: transform 6s ease;
+    }
+    .hero-bg::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(180deg, transparent 0%, transparent 40%, rgba(0,0,0,0.8) 100%);
+    }
+    #inicio.visible .hero-bg { animation: zoom-hero 6s ease forwards; }
+    .hero-contenido {
+      position: relative;
+      z-index: 10;
+      max-width: 600px;
+    }
+    .hero-etiqueta {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--blanco);
+      margin-bottom: 8px;
+      animation: fadeInUp 1s ease 0.2s both;
+    }
+    .hero-titulo {
+      font-family: var(--fuente-display);
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-weight: 700;
+      color: var(--rojo);
+      line-height: 1.1;
+      margin-bottom: 20px;
+      animation: fadeInUp 1s ease 0.4s both;
+    }
+    .hero-titulo em {
+      font-style: italic;
+      color: var(--blanco);
+    }
+    .hero-subtitulo {
+      font-size: clamp(0.85rem, 2vw, 1rem);
+      color: var(--blanco);
+      line-height: 1.8;
+      margin-bottom: 30px;
+      animation: fadeInUp 1s ease 0.6s both;
+    }
+    .btn-primario {
+      display: inline-block;
+      padding: 14px 32px;
+      background: var(--rojo);
+      color: var(--blanco);
+      border: none;
+      border-radius: var(--radio);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background var(--transicion), transform var(--transicion);
+      animation: fadeInUp 1s ease 0.8s both;
+    }
+    .btn-primario:hover {
+      background: var(--rojo-hover);
+      transform: translateY(-2px);
+    }
+    .scroll-hint {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 10;
+      text-align: center;
+      animation: fadeInUp 1s ease 1s both;
+    }
+    .scroll-hint i {
+      display: block;
+      font-size: 1.5rem;
+      color: var(--rojo);
+      animation: bounce 2s infinite;
+    }
+    .scroll-hint span {
+      display: block;
+      font-size: 0.7rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--blanco);
+      margin-top: 6px;
+    }
+    #nosotros {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+      padding: 80px 5%;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .nosotros-etiqueta {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      margin-bottom: 16px;
+    }
+    .nosotros-titulo {
+      font-family: var(--fuente-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      line-height: 1.2;
+      margin-bottom: 12px;
+      color: var(--negro);
+    }
+    .nosotros-texto {
+      font-size: 0.95rem;
+      line-height: 1.8;
+      color: var(--gris);
+      margin-bottom: 20px;
+    }
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 40px;
+      margin-top: 50px;
+    }
+    .stat-item {
+      text-align: center;
+    }
+    .stat-item strong {
+      display: block;
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--rojo);
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .stat-item span {
+      font-size: 0.85rem;
+      color: var(--gris);
+      line-height: 1.5;
+    }
+    #nosotros > div:last-child {
+      position: relative;
+      height: 500px;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: var(--sombra);
+    }
+    #nosotros > div:last-child img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+    #conocenos {
+      background: var(--blanco);
+      padding: 80px 5%;
+    }
+    .conocenos-container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+    .conocenos-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .conocenos-titulo {
+      font-family: var(--fuente-display);
+      font-size: clamp(2rem, 4vw, 3.2rem);
+      font-weight: 700;
+      color: var(--negro);
+      margin-bottom: 20px;
+      position: relative;
+      padding-bottom: 30px;
+    }
+    .conocenos-titulo::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 48px;
+      height: 3px;
+      background: var(--rojo);
+    }
+    .conocenos-contenido {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .conocenos-texto {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .conocenos-texto p {
+      font-size: 1rem;
+      line-height: 1.8;
+      color: var(--gris);
+      margin: 0;
+    }
+    .conocenos-video {
+      position: relative;
+      overflow: hidden;
+      border-radius: 8px;
+      box-shadow: var(--sombra);
+      background: #f0f0f0;
+    }
+    .conocenos-video video {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 8px;
+    }
+    @media (max-width: 768px) {
+      #conocenos {
+        padding: 60px 5%;
+      }
+      .conocenos-contenido {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      .conocenos-texto p {
+        font-size: 0.95rem;
+      }
+    }
+    #contacto {
+      background: var(--negro);
+      color: var(--blanco);
+      padding: 80px 5%;
+    }
+    .contacto-container {
+      max-width: 700px;
+      margin: 0 auto;
+    }
+    .contacto-header {
+      text-align: center;
+      margin-bottom: 50px;
+    }
+    .contacto-etiqueta {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--rojo);
+      margin-bottom: 12px;
+    }
+    .contacto-titulo {
+      font-family: var(--fuente-display);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+    }
+    .form-group {
+      margin-bottom: 24px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .form-group input,
+    .form-group textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(255, 255, 255, 0.1);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radio);
+      color: var(--blanco);
+      font-family: var(--fuente-body);
+      font-size: 0.9rem;
+      transition: border-color var(--transicion), background var(--transicion);
+    }
+    .form-group input::placeholder,
+    .form-group textarea::placeholder {
+      color: rgba(255, 255, 255, 0.5);
+    }
+    .form-group input:focus,
+    .form-group textarea:focus {
+      outline: none;
+      border-color: var(--rojo);
+      background: rgba(255, 255, 255, 0.15);
+    }
+    .form-group textarea {
+      resize: vertical;
+      min-height: 120px;
+    }
+    .captcha-container {
+      margin-bottom: 24px;
+      padding: 16px;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radio);
+    }
+    .captcha-pregunta {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 12px;
+      color: var(--rojo);
+    }
+    .captcha-error {
+      display: none;
+      font-size: 0.85rem;
+      color: #ff6b6b;
+      margin-top: 12px;
+    }
+    .btn-enviar {
+      width: 100%;
+      padding: 14px 32px;
+      background: var(--rojo);
+      color: var(--blanco);
+      border: none;
+      border-radius: var(--radio);
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: background var(--transicion), transform var(--transicion);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-enviar:hover {
+      background: var(--rojo-hover);
+      transform: translateY(-2px);
+    }
+    .btn-enviar i {
+      font-size: 1.1rem;
+    }
+    .mensaje-exito {
+      display: none;
+      text-align: center;
+      margin-top: 24px;
+      padding: 16px;
+      background: rgba(76, 175, 80, 0.2);
+      border: 1px solid #4CAF50;
+      border-radius: var(--radio);
+      color: #c8e6c9;
+      font-weight: 500;
+    }
+    .mensaje-exito i {
+      margin-right: 8px;
+    }
+    .asunto-botones {
+      display: flex;
+      gap: 12px;
+      margin-top: 8px;
+    }
+    .btn-asunto {
+      flex: 1;
+      padding: 12px 20px;
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--blanco);
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      border-radius: var(--radio);
+      font-size: 0.9rem;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+      cursor: pointer;
+      transition: all var(--transicion);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      font-family: var(--fuente-body);
+    }
+    .btn-asunto i {
+      font-size: 1.1rem;
+    }
+    .btn-asunto:hover {
+      background: rgba(195, 32, 24, 0.3);
+      border-color: var(--rojo);
+      color: var(--rojo);
+    }
+    .btn-asunto.activo {
+      background: var(--rojo);
+      border-color: var(--rojo);
+      color: var(--blanco);
+      box-shadow: 0 4px 12px rgba(195, 32, 24, 0.4);
+    }
+    #ubicacion {
+      padding: 80px 5%;
+      background: linear-gradient(135deg, rgba(0, 0, 0, 0.05), rgba(195, 32, 24, 0.08));
+    }
+    .ubicacion-container {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .ubicacion-header {
+      text-align: center;
+      margin-bottom: 60px;
+    }
+    .ubicacion-titulo {
+      font-family: var(--fuente-display);
+      font-size: clamp(2rem, 4vw, 2.5rem);
+      font-weight: 700;
+      color: var(--negro);
+      margin-bottom: 12px;
+    }
+    .ubicacion-subtitulo {
+      font-size: 1rem;
+      color: var(--gris);
+      letter-spacing: 0.05em;
+    }
+    .ubicacion-contenido {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: start;
+    }
+    .ubicacion-mapa {
+      width: 100%;       
+      height: 450px;     
+      max-width: 800px;  
+      border-radius: var(--radio, 12px); 
+      overflow: hidden;  
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    }
+    .ubicacion-mapa iframe {
+      display: block;
+      width: 100%;
+      height: 100%;
+    }
+    .ubicacion-info {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .info-card {
+      padding: 24px;
+      background: var(--blanco);
+      border-left: 4px solid var(--rojo);
+      border-radius: var(--radio);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+      display: flex;
+      gap: 20px;
+      transition: transform var(--transicion), box-shadow var(--transicion);
+    }
+    .info-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    .info-icon {
+      flex-shrink: 0;
+      width: 50px;
+      height: 50px;
+      background: rgba(195, 32, 24, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--rojo);
+    }
+    .info-content h3 {
+      font-family: var(--fuente-display);
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: var(--negro);
+      margin-bottom: 8px;
+    }
+    .info-content p {
+      color: var(--gris);
+      font-size: 0.95rem;
+      line-height: 1.6;
+      margin: 0;
+    }
+    .info-content a {
+      color: var(--rojo);
+      font-weight: 500;
+      transition: color var(--transicion);
+    }
+    .info-content a:hover {
+      color: var(--rojo-hover);
+    }
+    .info-subtitle {
+      font-size: 0.85rem;
+      color: rgba(85, 85, 85, 0.7);
+      margin-top: 4px !important;
+    }
+    @media (max-width: 768px) {
+      #ubicacion {
+        padding: 60px 5%;
+      }
+      .ubicacion-contenido {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .ubicacion-mapa {
+        min-height: 300px;
+        order: 2;
+      }
+      .ubicacion-info {
+        order: 1;
+      }
+      .info-card {
+        padding: 16px;
+        gap: 16px;
+      }
+      .info-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+      }
+      .info-content h3 {
+        font-size: 1rem;
+      }
+      .info-content p {
+        font-size: 0.9rem;
+      }
+    }
+    footer {
+      background: #1a1a1a;
+      color: var(--blanco);
+      padding: 40px 5%;
+      text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--fuente-display);
+      font-size: 1.4rem;
+      font-weight: 700;
+      margin-bottom: 20px;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    .redes-sociales {
+      display: flex;
+      gap: 20px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+    .redes-sociales a {
+      width: 40px;
+      height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      transition: background var(--transicion), color var(--transicion);
+      font-size: 1.2rem;
+      color: var(--blanco);
+    }
+    .redes-sociales a:hover { background: var(--rojo); color: var(--blanco); }
+    .redes-sociales a.facebook:hover { background: #1877F2; }
+    .redes-sociales a.instagram:hover { background: #E4405F; }
+    .redes-sociales a.tiktok:hover { background: #000000; }
+    .footer-copy {
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.7);
+    }
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-10px); }
+    }
+    .animar-entrada {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .animar-entrada.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    @keyframes zoom-hero {
+      from { transform: scale(1.05); }
+      to   { transform: scale(1); }
+    }
+    @media (max-width: 768px) {
+      #nosotros {
+        grid-template-columns: 1fr;
+        gap: 40px;
+      }
+      #nosotros > div:last-child {
+        height: 300px;
+      }
+      .stats {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .hamburger { display: flex; }
+      .nav-links { display: none; }
+      .whatsapp-btn {
+        bottom: 20px;
+        right: 20px;
+        width: 50px;
+        height: 50px;
+      }
+      .whatsapp-btn i {
+        font-size: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <a href="https://wa.me/521234567890" class="whatsapp-btn" target="_blank" aria-label="Contactar por WhatsApp">
+    <i class="ri-whatsapp-line"></i>
+  </a>
+  <header id="header">
+    <a href="index.html" class="logo">
+      AC Bienes Raíces
+      <span>Propiedades & Inversiones</span>
+    </a>
+    <nav>
+      <ul class="nav-links">
+        <li><a href="compra.html">Compra</a></li>
+        <li><a href="venta.html">Venta</a></li>
+        <li><a href="avaluos.html">Avalúos</a></li>
+        <li><a href="creditos.html">Créditos</a></li>
+        <li><a href="gestion-notarial.html">Gestión Notarial</a></li>
+      </ul>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+  </header>
+  <nav class="nav-mobile" id="navMobile">
+    <button class="cerrar" id="cerrarMenu" aria-label="Cerrar menú">
+      <i class="ri-close-line"></i>
+    </button>
+    <a href="compra.html" class="nav-mobile-link">Compra</a>
+    <a href="venta.html" class="nav-mobile-link">Venta</a>
+    <a href="avaluos.html" class="nav-mobile-link">Avalúos</a>
+    <a href="creditos.html" class="nav-mobile-link">Créditos</a>
+    <a href="gestion-notarial.html" class="nav-mobile-link">Gestión Notarial</a>
+  </nav>
+  <section id="inicio">
+    <div class="hero-bg"></div>
+    <div class="hero-contenido">
+      <span class="hero-etiqueta">Experiencia que construye confianza</span>
+      <h1 class="hero-titulo">
+        Tu próximo hogar<br />
+        <em>te está esperando</em>
+      </h1>
+      <p class="hero-subtitulo">
+        En AC Bienes Raíces transformamos la búsqueda de propiedades en una
+        experiencia segura, transparente y sin complicaciones.
+      </p>
+      <a href="#contacto" class="btn-primario">Solicitar asesoría</a>
+    </div>
+    <div class="scroll-hint">
+      <i class="ri-arrow-down-line"></i>
+      <span></span>
+    </div>
+  </section>
+  <section id="nosotros">
+    <div class="animar-entrada">
+      <span class="nosotros-etiqueta">¿Quiénes somos?</span>
+      <h2 class="nosotros-titulo">
+        Más de 5 años<br />logrando esos<br />sueños, tus sueños.
+      </h2>
+      <span class="linea-roja"></span>
+      <p class="nosotros-texto">
+        Somos una empresa dedicada a acompañarte en cada etapa de tu
+        decisión inmobiliaria. Desde la primera visita hasta la firma ante
+        notario, nuestro equipo experto cuida cada detalle.
+      </p>
+      <p class="nosotros-texto">
+        Operamos en Silao de la Victoria y sus alrededores con un profundo
+        conocimiento del mercado local, ofreciéndote asesoría honesta y
+        resultados reales.
+      </p>
+      <div class="stats">
+        <div class="stat-item animar-entrada">
+          <strong>+80</strong>
+          <span>Propiedades<br />entregadas</span>
+        </div>
+        <div class="stat-item animar-entrada">
+          <strong>5+</strong>
+          <span>Años de<br />experiencia</span>
+        </div>
+        <div class="stat-item animar-entrada">
+          <strong>100%</strong>
+          <span>Clientes<br />satisfechos</span>
+        </div>
+      </div>
+    </div>
+    <div class="animar-entrada">
+      <img src="https://images.unsplash.com/photo-1552321554-5fefe8c9ef14?w=600&q=80" alt="Equipo de AC Bienes Raíces" />
+    </div>
+  </section>
+  <section id="conocenos">
+    <div class="conocenos-container">
+      <div class="conocenos-header animar-entrada">
+        <h2 class="conocenos-titulo">Conócenos</h2>
+      </div>
+      <div class="conocenos-contenido">
+        <div class="conocenos-texto animar-entrada">
+          <p>
+             Texto de presentación de la empresa, su misión, visión y valores. Aquí puedes o Eliminar.
+          </p>
+        </div>
+        <div class="conocenos-video animar-entrada">
+         <iframe 
+         width="560" 
+         height="315" 
+         src="https://www.youtube.com/embed/j9qLfyLowjg?si=h2u7TfjdDy7LLtVR" 
+         title="YouTube video player" 
+         frameborder="0" 
+         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+         referrerpolicy="strict-origin-when-cross-origin" allowfullscreen>
+        </iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+  <section id="contacto">
+    <div class="contacto-container">
+      <div class="contacto-header animar-entrada">
+        <span class="contacto-etiqueta">Contacta con nosotros</span>
+        <h2 class="contacto-titulo">¿En que podemos ayudarte?</h2>
+      </div>
+      <form id="formContacto" class="animar-entrada">
+        <div class="form-group">
+          <label for="nombre">Tu nombre</label>
+          <input
+            type="text"
+            id="nombre"
+            name="nombre"
+            placeholder="Nombre Apellido"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="email">Tu correo</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            placeholder="tuejemplo@email.com"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="telefono">Teléfono</label>
+          <input
+            type="tel"
+            id="telefono"
+            name="telefono"
+            placeholder="+52 (000) 000-0000"
+          />
+        </div>
+        <div class="form-group">
+          <label>Tipo de servicio</label>
+          <div class="asunto-botones">
+            <input
+              type="hidden"
+              id="asunto"
+              name="asunto"
+              value=""
+              required
+            />
+            <button
+              type="button"
+              class="btn-asunto"
+              data-asunto="Compra"
+              aria-label="Seleccionar Compra"
+            >
+              <i class="ri-home-heart-line"></i> Compra
+            </button>
+            <button
+              type="button"
+              class="btn-asunto"
+              data-asunto="Venta"
+              aria-label="Seleccionar Venta"
+            >
+              <i class="ri-building-4-line"></i> Venta
+            </button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label for="mensaje">Mensaje</label>
+          <textarea
+            id="mensaje"
+            name="mensaje"
+            placeholder="Cuéntanos más sobre tu interés..."
+            required
+          ></textarea>
+        </div>
+        <div class="captcha-container">
+          <label for="captchaPregunta">Verificación: </label>
+          <div class="captcha-pregunta" id="captchaPregunta">
+            2 + 3 = ?
+          </div>
+          <div class="form-group">
+            <input
+              type="number"
+              id="captchaRespuesta"
+              placeholder="Tu respuesta"
+              min="0"
+              max="99"
+              required
+            />
+          </div>
+          <p class="captcha-error" id="captchaError">
+            Respuesta incorrecta. Inténtalo de nuevo.
+          </p>
+        </div>
+        <button type="submit" class="btn-enviar animar-entrada">
+          Enviar mensaje <i class="ri-send-plane-line"></i>
+        </button>
+        <p class="mensaje-exito" id="mensajeExito">
+          <i class="ri-checkbox-circle-line"></i>
+          ¡Mensaje enviado! Te contactaremos pronto.
+        </p>
+      </form>
+    </div>
+  </section>
+  <section id="ubicacion">
+    <div class="ubicacion-container">
+      <div class="ubicacion-header animar-entrada">
+        <h2 class="ubicacion-titulo">Visítanos</h2>
+        <p class="ubicacion-subtitulo">Te esperamos en nuestras oficinas</p>
+      </div>
+      <div class="ubicacion-contenido">
+        <div class="ubicacion-mapa animar-entrada">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3541.8485628124745!2d-101.4231656!3d20.9437282!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842b9dbb4cabcfd3%3A0x66c0bd0d37cb3a64!2sAC%20Bienes%20Ra%C3%ADces!5e1!3m2!1ses-419!2smx!4v1779239046162!5m2!1ses-419!2smx"
+            width="100%"
+            height="100%"
+            style="border: 0;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            aria-label="Mapa de ubicación"
+          ></iframe>
+        </div>
+        <div class="ubicacion-info animar-entrada">
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="ri-map-pin-2-line"></i>
+            </div>
+            <div class="info-content">
+              <h3>Dirección</h3>
+              <p>Silao de la Victoria, Guanajuato, México</p>
+              <p class="info-subtitle">Código Postal: 36100</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="ri-time-line"></i>
+            </div>
+            <div class="info-content">
+              <h3>Horario</h3>
+              <p>Lunes a Viernes: 9:00 AM - 18:00 PM</p>
+              <p class="info-subtitle">Sábados: 9:00 AM - 16:00 PM</p>
+            </div>
+          </div>
+          <div class="info-card">
+            <div class="info-icon">
+              <i class="ri-phone-line"></i>
+            </div>
+            <div class="info-content">
+              <h3>Teléfono</h3>
+              <p><a href="tel:+521234567890">+52 472 244 9605</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <footer>
+    <div class="footer-logo">AC Bienes Raíces</div>
+    <div class="redes-sociales">
+      <a href="#" class="facebook" title="Facebook" aria-label="Facebook">
+        <i class="ri-facebook-fill"></i>
+      </a>
+      <a href="#" class="instagram" title="Instagram" aria-label="Instagram">
+        <i class="ri-instagram-line"></i>
+      </a>
+      <a href="#" class="tiktok" title="TikTok" aria-label="TikTok">
+        <i class="ri-tiktok-line"></i>
+      </a>
+    </div>
+    <p class="footer-copy">
+      © <span id="anioActual"></span> AC Bienes Raíces. Todos los derechos reservados.
+    </p>
+  </footer>
+  <script>
+    document.getElementById('anioActual').textContent = new Date().getFullYear();
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 60) {
+        header.classList.add('scrolled');
+      } else {
+        header.classList.remove('scrolled');
+      }
+    });
+    const hamburger  = document.getElementById('hamburger');
+    const navMobile  = document.getElementById('navMobile');
+    const cerrarMenu = document.getElementById('cerrarMenu');
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.add('abierto');
+      navMobile.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    });
+    cerrarMenu.addEventListener('click', cerrar);
+    document.querySelectorAll('.nav-mobile-link').forEach(link => {
+      link.addEventListener('click', cerrar);
+    });
+    function cerrar() {
+      hamburger.classList.remove('abierto');
+      navMobile.classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+    const botonesAsunto = document.querySelectorAll('.btn-asunto');
+    const inputAsunto = document.getElementById('asunto');
+    botonesAsunto.forEach(boton => {
+      boton.addEventListener('click', (e) => {
+        e.preventDefault();
+        botonesAsunto.forEach(b => b.classList.remove('activo'));
+        boton.classList.add('activo');
+        inputAsunto.value = boton.dataset.asunto;
+      });
+    });
+    const observadorOpciones = {
+      threshold: 0.15
+    };
+    const observador = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observador.unobserve(entry.target);
+        }
+      });
+    }, observadorOpciones);
+    document.querySelectorAll('.animar-entrada').forEach(el => {
+      observador.observe(el);
+    });
+    let respuestaCorrecta = 0;
+    function generarCaptcha() {
+      const a = Math.floor(Math.random() * 9) + 1;
+      const b = Math.floor(Math.random() * 9) + 1;
+      respuestaCorrecta = a + b;
+      document.getElementById('captchaPregunta').textContent = `${a} + ${b} = ?`;
+      document.getElementById('captchaRespuesta').value = '';
+    }
+    generarCaptcha();
+    document.getElementById('formContacto').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const inputRespuesta = document.getElementById('captchaRespuesta');
+      const errorCaptcha   = document.getElementById('captchaError');
+      const mensajeExito   = document.getElementById('mensajeExito');
+      const respuestaUsuario = parseInt(inputRespuesta.value, 10);
+      if (isNaN(respuestaUsuario) || respuestaUsuario !== respuestaCorrecta) {
+        errorCaptcha.style.display = 'block';
+        generarCaptcha();
+        inputRespuesta.value = '';
+        return;
+      }
+      errorCaptcha.style.display = 'none';
+      this.reset();
+      generarCaptcha();
+      mensajeExito.style.display = 'block';
+      setTimeout(() => {
+        mensajeExito.style.display = 'none';
+      }, 5000);
+    });
+    document.querySelectorAll('a[href^="#"]').forEach(enlace => {
+      enlace.addEventListener('click', function(e) {
+        const destino = document.querySelector(this.getAttribute('href'));
+        if (destino) {
+          e.preventDefault();
+          cerrar();
+          destino.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
