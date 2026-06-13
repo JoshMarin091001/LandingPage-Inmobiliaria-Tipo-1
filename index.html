@@ -1,0 +1,762 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  
+  <link rel="icon"             type="image/png"  sizes="32x32" href="img/favicon-32x32.png" />
+  <meta name="theme-color" content="#3E86C0" />
+  <title>Inmobiliaria de la Gente – Silao, Guanajuato</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css" rel="stylesheet" />
+
+  <style>
+   
+    :root {
+      --color-bg:       #F8F3EC;
+      --color-accent:   #3E86C0;
+      --color-white:    #FFFFFF;
+      --color-dark:     #1A1A1A;
+      --color-gray:     #6B7280;
+      --color-light:    #E5E7EB;
+      --color-success:  #10B981;
+      --color-error:    #EF4444;
+      --verde-whatsapp: #25D366;
+
+      --fuente-display: 'Playfair Display', Georgia, serif;
+      --fuente-body:    'Plus Jakarta Sans', sans-serif;
+
+      --radio:      8px;
+      --sombra:     0 10px 40px rgba(0, 0, 0, 0.08);
+      --sombra-lg:  0 20px 60px rgba(0, 0, 0, 0.12);
+      --transicion: 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--fuente-body); background: var(--color-bg); color: var(--color-dark); line-height: 1.6; overflow-x: hidden; }
+    img { display: block; max-width: 100%; height: auto; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    
+    .whatsapp-btn {
+      position: fixed; bottom: 30px; right: 30px;
+      width: 60px; height: 60px;
+      background: var(--verde-whatsapp);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      box-shadow: 0 4px 20px rgba(37, 211, 102, 0.4);
+      z-index: 500; cursor: pointer;
+      transition: transform var(--transicion), box-shadow var(--transicion);
+      text-decoration: none;
+    }
+    .whatsapp-btn:hover { transform: scale(1.15); box-shadow: 0 8px 32px rgba(37, 211, 102, 0.6); }
+    .whatsapp-btn i { font-size: 28px; color: var(--color-white); }
+
+   
+    header {
+      position: fixed; top: 0; left: 0; right: 0;
+      z-index: 1000;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 18px 5%;
+     
+      background: var(--color-white);
+      box-shadow: var(--sombra);
+      transition: all var(--transicion);
+    }
+
+    header.scrolled {
+      padding: 14px 5%;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.12);
+    }
+
+   
+    .logo-link { display: flex; align-items: center; text-decoration: none; transition: opacity var(--transicion); }
+    .logo-link:hover { opacity: 0.85; }
+
+    
+    .logo-img {
+      max-height: 52px;   
+      width: auto;        
+      display: block;
+      object-fit: contain;
+    }
+
+    
+    .logo-fallback {
+      font-family: var(--fuente-display);
+      font-size: clamp(1.2rem, 2.5vw, 1.6rem);
+      font-weight: 700;
+      color: var(--color-dark);
+      letter-spacing: -0.02em;
+      line-height: 1.1;
+    }
+    .logo-fallback span {
+      display: block; font-size: 0.5em; font-weight: 500;
+      letter-spacing: 0.15em; text-transform: uppercase;
+      color: var(--color-accent);
+    }
+
+   
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a {
+      font-size: 0.82rem; font-weight: 600;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      color: var(--color-gray);
+      position: relative; padding: 8px 0;
+      transition: color var(--transicion);
+    }
+    .nav-links a::after {
+      content: ''; position: absolute;
+      bottom: 0; left: 0; width: 0; height: 2px;
+      background: var(--color-accent);
+      transition: width var(--transicion);
+    }
+    .nav-links a:hover { color: var(--color-accent); }
+    .nav-links a:hover::after { width: 100%; }
+
+    
+    .hamburger { display: none; flex-direction: column; gap: 6px; cursor: pointer; padding: 4px; background: none; border: none; }
+    .hamburger span { display: block; width: 26px; height: 2px; background: var(--color-dark); transition: all var(--transicion); }
+    .hamburger.abierto span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+    .hamburger.abierto span:nth-child(2) { opacity: 0; }
+    .hamburger.abierto span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+    
+    .nav-mobile {
+      display: none; position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: linear-gradient(135deg, var(--color-accent) 0%, #2c5a8e 100%);
+      flex-direction: column; align-items: center; justify-content: center;
+      gap: 28px; z-index: 999; padding: 60px 20px;
+    }
+    .nav-mobile.visible { display: flex; }
+    .nav-mobile a { font-size: 1.2rem; font-weight: 600; color: var(--color-white); padding: 12px 20px; border-radius: var(--radio); transition: background var(--transicion); }
+    .nav-mobile a:hover { background: rgba(255,255,255,0.12); }
+    .cerrar-menu { position: absolute; top: 28px; right: 28px; width: 40px; height: 40px; background: rgba(255,255,255,0.12); border: none; border-radius: 50%; color: var(--color-white); font-size: 24px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: background var(--transicion); }
+    .cerrar-menu:hover { background: rgba(255,255,255,0.22); }
+
+  
+    .hero {
+      position: relative; min-height: 100vh;
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 40px; align-items: center;
+      padding: 130px 5% 70px;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: ''; position: absolute; top: 0; right: -10%;
+      width: 500px; height: 500px;
+      background: radial-gradient(circle, rgba(62, 134, 192, 0.07) 0%, transparent 70%);
+      border-radius: 50%; z-index: 0;
+    }
+    .hero-content { position: relative; z-index: 2; }
+    .hero-content h1 { font-family: var(--fuente-display); font-size: clamp(2rem, 4.5vw, 3.4rem); font-weight: 700; line-height: 1.2; color: var(--color-dark); margin-bottom: 20px; letter-spacing: -0.02em; }
+    .hero-content h1 .accent { color: var(--color-accent); }
+    .hero-content p { font-size: clamp(0.95rem, 1.8vw, 1.1rem); color: var(--color-gray); line-height: 1.8; margin-bottom: 32px; max-width: 460px; }
+    .hero-buttons { display: flex; gap: 16px; flex-wrap: wrap; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 10px; padding: 14px 32px; font-size: 0.9rem; font-weight: 600; border-radius: var(--radio); cursor: pointer; border: none; transition: all var(--transicion); text-transform: uppercase; letter-spacing: 0.05em; font-family: var(--fuente-body); }
+    .btn-primary { background: var(--color-accent); color: var(--color-white); }
+    .btn-primary:hover { background: #2d6a9e; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(62,134,192,0.3); }
+    .btn-secondary { background: var(--color-white); color: var(--color-accent); border: 2px solid var(--color-accent); }
+    .btn-secondary:hover { background: var(--color-accent); color: var(--color-white); }
+
+    .hero-image { position: relative; z-index: 1; display: flex; align-items: center; justify-content: center; }
+    .hero-image-wrapper { position: relative; width: 100%; aspect-ratio: 1; border-radius: 20px; overflow: hidden; box-shadow: var(--sombra-lg); animation: floatImage 6s ease-in-out infinite; }
+    @keyframes floatImage { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-16px); } }
+    .hero-image img { width: 100%; height: 100%; object-fit: cover; }
+
+   
+    .nosotros { padding: 80px 5%; background: var(--color-white); border-radius: 40px 40px 0 0; }
+    .section-title { font-family: var(--fuente-display); font-size: clamp(2rem, 4vw, 2.8rem); font-weight: 700; color: var(--color-dark); margin-bottom: 48px; text-align: center; letter-spacing: -0.02em; }
+    .section-title .accent { color: var(--color-accent); }
+
+    .bento-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 24px; margin-bottom: 48px; }
+    .bento-item { padding: 40px 30px; background: var(--color-bg); border-radius: 16px; position: relative; overflow: hidden; transition: all var(--transicion); border: 1px solid rgba(62,134,192,0.1); }
+    .bento-item:hover { transform: translateY(-8px); border-color: var(--color-accent); box-shadow: 0 15px 40px rgba(62,134,192,0.15); }
+    .bento-number { font-family: var(--fuente-display); font-size: 3rem; font-weight: 700; color: var(--color-accent); line-height: 1; margin-bottom: 10px; }
+    .bento-label { font-size: 0.9rem; font-weight: 500; color: var(--color-gray); text-transform: uppercase; letter-spacing: 0.1em; }
+
+   
+    .servicios { padding: 80px 5%; background: var(--color-bg); }
+    .servicios-lista { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+
+   
+    .servicio-card {
+      display: block; 
+      background: var(--color-white);
+      padding: 30px;
+      border-radius: 16px;
+      cursor: pointer;
+      transition: all var(--transicion);
+      border: 1px solid var(--color-light);
+      position: relative; overflow: hidden;
+      text-decoration: none;
+      color: inherit;
+    }
+    .servicio-card::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 4px; background: var(--color-accent); transform: scaleX(0); transform-origin: left; transition: transform var(--transicion); }
+    .servicio-card:hover { box-shadow: var(--sombra); transform: translateY(-6px); }
+    .servicio-card:hover::after { transform: scaleX(1); }
+
+    .servicio-header { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+    .servicio-icon { width: 50px; height: 50px; background: linear-gradient(135deg, var(--color-accent), #2d6a9e); border-radius: 12px; display: flex; align-items: center; justify-content: center; color: var(--color-white); font-size: 24px; flex-shrink: 0; }
+    .servicio-titulo { font-family: var(--fuente-display); font-size: 1.25rem; font-weight: 600; color: var(--color-dark); }
+    .servicio-descripcion { font-size: 0.92rem; color: var(--color-gray); line-height: 1.65; margin-bottom: 16px; }
+    .servicio-arrow { color: var(--color-accent); font-size: 20px; display: block; transition: transform var(--transicion); }
+    .servicio-card:hover .servicio-arrow { transform: translateX(5px); }
+
+   
+    .ubicacion { padding: 80px 5%; background: var(--color-white); border-radius: 0 0 40px 40px; }
+    .ubicacion-wrapper { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: stretch; }
+    .mapa-container { position: relative; border-radius: 20px; overflow: hidden; box-shadow: var(--sombra-lg); min-height: 400px; }
+    .mapa-container iframe { width: 100%; height: 100%; min-height: 400px; border: none; }
+    .ubicacion-info { display: flex; flex-direction: column; gap: 24px; justify-content: center; }
+    .info-card { padding: 28px; background: var(--color-bg); border-radius: 16px; border-left: 4px solid var(--color-accent); transition: all var(--transicion); }
+    .info-card:hover { transform: translateX(8px); box-shadow: var(--sombra); }
+    .info-label { font-size: 0.82rem; font-weight: 600; text-transform: uppercase; color: var(--color-accent); letter-spacing: 0.1em; margin-bottom: 8px; display: flex; align-items: center; gap: 6px; }
+    .info-value { font-size: 1.1rem; font-weight: 600; color: var(--color-dark); margin-bottom: 4px; }
+    .info-detail { font-size: 0.92rem; color: var(--color-gray); }
+
+    
+    .contacto { padding: 80px 5%; background: linear-gradient(135deg, var(--color-accent), #2d6a9e); color: var(--color-white); }
+    .contacto .section-title { color: var(--color-white); }
+    .contacto .section-title .accent { color: #FFE066; }
+    .form-container { max-width: 600px; margin: 0 auto; }
+    .form-group { margin-bottom: 22px; }
+    .form-group label { display: block; font-size: 0.9rem; font-weight: 600; margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+    .form-group input, .form-group textarea { width: 100%; padding: 14px 16px; border: none; border-radius: var(--radio); font-family: var(--fuente-body); font-size: 0.95rem; background: rgba(255,255,255,0.95); color: var(--color-dark); transition: all var(--transicion); }
+    .form-group input:focus, .form-group textarea:focus { outline: none; background: var(--color-white); box-shadow: 0 0 0 3px rgba(255,255,255,0.35); }
+    .form-group textarea { resize: vertical; min-height: 120px; }
+
+    .servicio-buttons { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 22px; }
+    .btn-asunto { padding: 13px 18px; background: rgba(255,255,255,0.15); color: var(--color-white); border: 2px solid rgba(255,255,255,0.3); border-radius: var(--radio); font-family: var(--fuente-body); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all var(--transicion); }
+    .btn-asunto:hover { background: rgba(255,255,255,0.25); border-color: rgba(255,255,255,0.5); }
+    .btn-asunto.activo { background: rgba(255,255,255,0.9); color: var(--color-accent); border-color: var(--color-white); }
+
+    .captcha-container { background: rgba(0,0,0,0.1); padding: 22px; border-radius: var(--radio); margin-bottom: 22px; border: 2px dashed rgba(255,255,255,0.3); }
+    .captcha-title { font-size: 0.88rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 12px; color: rgba(255,255,255,0.9); }
+    .captcha-display { background: var(--color-white); padding: 14px 20px; border-radius: 8px; font-family: 'Courier New', monospace; font-size: 1.8rem; font-weight: 700; letter-spacing: 0.18em; text-align: center; color: var(--color-accent); margin-bottom: 14px; user-select: none; border: 2px solid var(--color-accent); }
+    .captcha-input-label { display: block; font-size: 0.88rem; margin-bottom: 8px; font-weight: 500; }
+    #captchaRespuesta { text-align: center; font-size: 1.2rem; letter-spacing: 0.1em; font-weight: 600; text-transform: uppercase; }
+    .captcha-error { display: none; color: #FFE066; font-size: 0.88rem; font-weight: 600; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.05em; }
+
+    .mensaje-exito { display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%,-50%); background: var(--color-success); color: var(--color-white); padding: 30px 40px; border-radius: 12px; box-shadow: var(--sombra-lg); z-index: 2000; text-align: center; font-weight: 600; animation: slideUp 0.4s ease; }
+    @keyframes slideUp { from { opacity: 0; transform: translate(-50%,-40%); } to { opacity: 1; transform: translate(-50%,-50%); } }
+
+    .form-group .btn-submit { width: 100%; padding: 16px; background: rgba(255,255,255,0.9); color: var(--color-accent); border: none; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; border-radius: var(--radio); font-family: var(--fuente-body); font-size: 0.95rem; }
+    .form-group .btn-submit:hover { background: var(--color-white); box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+
+ 
+    
+    .animar-entrada { opacity: 0; transform: translateY(30px); }
+    .animar-entrada.visible { animation: fadeInUp var(--transicion) forwards; }
+    @keyframes fadeInUp { to { opacity: 1; transform: translateY(0); } }
+
+   
+    footer { background: var(--color-accent); color: var(--color-white); padding: 50px 5%; text-align: center; border-top: 1px solid rgba(255,255,255,0.1); }
+    .footer-logo { font-family: var(--fuente-display); font-size: 1.7rem; font-weight: 700; margin-bottom: 22px; letter-spacing: -0.02em; }
+    .redes-sociales { display: flex; justify-content: center; gap: 18px; margin-bottom: 22px; }
+    .redes-sociales a { display: flex; align-items: center; justify-content: center; width: 48px; height: 48px; background: rgba(255,255,255,0.1); border-radius: 50%; transition: all var(--transicion); font-size: 20px; color: var(--color-white); }
+    .redes-sociales a:hover { background: rgba(255,255,255,0.25); transform: translateY(-4px); }
+    .redes-sociales .facebook:hover { background: #1877F2; }
+    .redes-sociales .instagram:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
+    .redes-sociales .tiktok:hover { background: #000000; }
+    .footer-copy { font-size: 0.88rem; color: rgba(255,255,255,0.7); line-height: 1.6; }
+
+    
+    @media (max-width: 768px) {
+      .nav-links { display: none; }
+      .hamburger { display: flex; }
+
+      .hero {
+        grid-template-columns: 1fr;
+        padding: 120px 5% 60px;
+        min-height: auto;
+      }
+      .hero-image { display: none; }
+      .hero::after {
+        content: ''; position: absolute; inset: 0;
+        background:
+          linear-gradient(135deg, rgba(26,26,26,0.5), rgba(26,26,26,0.28)),
+          url('https://images.unsplash.com/photo-1564013799919-ab600027ffc6?w=800&h=800&fit=crop') center / cover;
+        z-index: 0; border-radius: 0;
+      }
+      .hero-content { z-index: 2; position: relative; }
+      .hero-content h1, .hero-content p { color: var(--color-white); text-shadow: 0 2px 8px rgba(0,0,0,0.3); }
+      .hero-content h1 .accent { color: #FFE066; }
+
+      .ubicacion-wrapper { grid-template-columns: 1fr; gap: 28px; }
+      .servicio-buttons { grid-template-columns: 1fr; }
+    }
+
+ 
+    @media (max-width: 480px) {
+      header { padding: 14px 4%; }
+
+      .logo-img { max-height: 40px; }
+
+      .hero { padding: 100px 5% 40px; }
+      .hero-content h1 { font-size: 1.9rem; }
+      .hero-content p { font-size: 0.92rem; }
+      .hero-buttons { flex-direction: column; }
+      .btn { width: 100%; justify-content: center; }
+
+      .section-title { font-size: 1.8rem; margin-bottom: 28px; }
+      .nosotros, .servicios, .ubicacion { padding: 50px 4%; }
+      .contacto { padding: 50px 4%; }
+
+      .bento-grid { grid-template-columns: 1fr; gap: 14px; }
+      .bento-item { padding: 26px 18px; }
+      .servicios-lista { grid-template-columns: 1fr; }
+
+      .mapa-container { min-height: 280px; }
+      .mapa-container iframe { min-height: 280px; }
+
+      .servicio-buttons { grid-template-columns: 1fr 1fr; }
+
+      .redes-sociales { gap: 14px; }
+      .redes-sociales a { width: 42px; height: 42px; font-size: 18px; }
+
+      .whatsapp-btn { bottom: 18px; right: 18px; width: 54px; height: 54px; }
+      .whatsapp-btn i { font-size: 24px; }
+    }
+  </style>
+</head>
+<body>
+
+ 
+  <header id="header">
+    <a href="index.html" class="logo-link">
+      
+      <img
+        src="img/logo.png"
+        alt="Inmobiliaria de la Gente – Logo"
+        class="logo-img"
+        onerror="this.style.display='none'; this.nextElementSibling.style.display='block';"
+      />
+      
+      <div class="logo-fallback" style="display:none;">
+        Inmobiliaria<br><span>de la Gente</span>
+      </div>
+    </a>
+
+  
+    <nav class="nav-links">
+      <a href="compra.html">Compra/Venta</a>
+      <a href="renta_de_habitacion.html">Renta Habitacional</a>
+      <a href="tramites_infonavit.html">Trámites Infonavit</a>
+      <a href="avaluos.html">Avalúos</a>
+      <a href="lotes.html">Lotes</a>
+      <a href="escrituras.html">Escrituras</a>
+    </nav>
+
+   
+    <button class="hamburger" id="hamburger" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+   
+    <nav class="nav-mobile" id="navMobile" aria-label="Menú móvil">
+      <button class="cerrar-menu" id="cerrarMenu" aria-label="Cerrar menú">
+        <i class="ri-close-line"></i>
+      </button>
+      <a href="compra.html" class="nav-mobile-link">Compra/Venta</a>
+      <a href="renta_de_habitacion.html" class="nav-mobile-link">Renta Habitacional</a>
+      <a href="tramites_infonavit.html" class="nav-mobile-link">Trámites Infonavit</a>
+      <a href="avaluos.html" class="nav-mobile-link">Avalúos</a>
+      <a href="lotes.html" class="nav-mobile-link">Lotes</a>
+      <a href="escrituras.html" class="nav-mobile-link">Escrituras</a>
+    </nav>
+  </header>
+
+  
+  <a href="https://wa.me/524721798396" class="whatsapp-btn" title="Contactar por WhatsApp" aria-label="WhatsApp">
+    <i class="ri-whatsapp-line"></i>
+  </a>
+
+  <section class="hero">
+    <div class="hero-content animar-entrada">
+      <h1>Encuentra tu <span class="accent">hogar perfecto</span> en Silao</h1>
+      <p>Con más de 2 años de experiencia, ofrecemos los mejores inmuebles en Guanajuato. Somos expertos en compra, venta, avalúos y gestión notarial.</p>
+      <div class="hero-buttons">
+        <a href="#contacto" class="btn btn-primary">
+          <i class="ri-phone-line"></i> Contactar Ahora
+        </a>
+        <a href="#servicios" class="btn btn-secondary">
+          <i class="ri-arrow-right-line"></i> Explorar
+        </a>
+      </div>
+    </div>
+
+    <div class="hero-image animar-entrada">
+      <div class="hero-image-wrapper">
+        <img src="img/fachada casa.PNG" alt="Fachada de inmueble" loading="lazy" />
+      </div>
+    </div>
+  </section>
+
+  
+  <section class="nosotros">
+    <div class="container">
+      <h2 class="section-title">¿Quiénes <span class="accent">Somos?</span></h2>
+
+      <div class="bento-grid">
+        <div class="bento-item animar-entrada">
+          <div class="bento-number">80+</div>
+          <div class="bento-label">Propiedades Exitosas</div>
+        </div>
+        <div class="bento-item animar-entrada">
+          <div class="bento-number">2+</div>
+          <div class="bento-label">Años de Experiencia</div>
+        </div>
+        <div class="bento-item animar-entrada">
+          <div class="bento-number">100%</div>
+          <div class="bento-label">Satisfacción Cliente</div>
+        </div>
+      </div>
+
+      <p style="text-align:center; color:var(--color-gray); font-size:1.05rem; line-height:1.8; max-width:700px; margin:0 auto;">
+        Somos una inmobiliaria comprometida con conectar a las personas con sus espacios ideales. Ofrecemos un servicio integral y personalizado, respaldado por experiencia y profesionalismo.
+      </p>
+    </div>
+  </section>
+
+ 
+  <section class="servicios" id="servicios">
+    <div class="container">
+      <h2 class="section-title">Nuestros <span class="accent">Servicios</span></h2>
+
+      <div class="servicios-lista">
+
+        
+        <a href="compra.html" class="servicio-card animar-entrada">
+          <div class="servicio-header">
+            <div class="servicio-icon"><i class="ri-home-heart-line"></i></div>
+            <h3 class="servicio-titulo">Compra/Venta</h3>
+          </div>
+          <p class="servicio-descripcion">Encuentra la propiedad ideal con nuestro amplio catálogo de inmuebles en Silao y sus alrededores.</p>
+          <i class="ri-arrow-right-line servicio-arrow"></i>
+        </a>
+
+        <a href="renta_de_habitacion.html" class="servicio-card animar-entrada">
+          <div class="servicio-header">
+            <div class="servicio-icon"><i class="ri-building-line"></i></div>
+            <h3 class="servicio-titulo">Renta Habitacional</h3>
+          </div>
+          <p class="servicio-descripcion">Encuentra la propiedad ideal para ti y tu familia, o renta tu propiedad a través de nosotros con trámites sin preocupaciones.</p>
+          <i class="ri-arrow-right-line servicio-arrow"></i>
+        </a>
+
+        <a href="tramites_infonavit.html" class="servicio-card animar-entrada">
+          <div class="servicio-header">
+            <div class="servicio-icon"><i class="ri-bar-chart-2-line"></i></div>
+            <h3 class="servicio-titulo">Trámites Infonavit</h3>
+          </div>
+          <p class="servicio-descripcion">Nuestros asesores altamente calificados te acompañan en tu proceso y asesoría sobre tus puntos de Infonavit.</p>
+          <i class="ri-arrow-right-line servicio-arrow"></i>
+        </a>
+
+        <a href="avaluos.html" class="servicio-card animar-entrada">
+          <div class="servicio-header">
+            <div class="servicio-icon"><i class="ri-bank-card-line"></i></div>
+            <h3 class="servicio-titulo">Avalúos</h3>
+          </div>
+          <p class="servicio-descripcion">Contamos con equipo altamente calificado que te ayudará a dar el mejor valor comercial a tu bien inmueble.</p>
+          <i class="ri-arrow-right-line servicio-arrow"></i>
+        </a>
+
+        <a href="lotes.html" class="servicio-card animar-entrada">
+          <div class="servicio-header">
+            <div class="servicio-icon"><i class="ri-file-list-line"></i></div>
+            <h3 class="servicio-titulo">Lotes</h3>
+          </div>
+          <p class="servicio-descripcion">Descubre oportunidades únicas de inversión en terrenos estratégicamente ubicados, residenciales y comerciales.</p>
+          <i class="ri-arrow-right-line servicio-arrow"></i>
+        </a>
+
+        <a href="escrituras.html" class="servicio-card animar-entrada">
+          <div class="servicio-header">
+            <div class="servicio-icon"><i class="ri-customer-service-2-line"></i></div>
+            <h3 class="servicio-titulo">Escrituras</h3>
+          </div>
+          <p class="servicio-descripcion">Asesoría y acompañamiento integral en el proceso de escrituración para que tu transacción sea segura y con certeza jurídica.</p>
+          <i class="ri-arrow-right-line servicio-arrow"></i>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+ 
+  <section class="ubicacion">
+    <div class="container">
+      <h2 class="section-title">Nuestra <span class="accent">Ubicación</span></h2>
+
+      <div class="ubicacion-wrapper">
+        <div class="mapa-container animar-entrada">
+          <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3541.856088895744!2d-101.4246253!3d20.943410099999998!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x842b9d2564f2930d%3A0x8578a9c0d515b34!2sLa%20Inmobiliaria%20de%20la%20Gente!5e1!3m2!1ses-419!2smx!4v1779252885312!5m2!1ses-419!2smx"
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Mapa de Inmobiliaria de la Gente">
+          </iframe>
+        </div>
+
+        <div class="ubicacion-info">
+          <div class="info-card animar-entrada">
+            <div class="info-label"><i class="ri-map-pin-line"></i> Dirección</div>
+            <div class="info-value">Silao de la Victoria</div>
+            <div class="info-detail">36100, Guanajuato, México</div>
+          </div>
+          <div class="info-card animar-entrada">
+            <div class="info-label"><i class="ri-time-line"></i> Horario</div>
+            <div class="info-value">Lun – Sab</div>
+            <div class="info-detail">9:00 AM – 6:00 PM</div>
+          </div>
+          <div class="info-card animar-entrada">
+            <div class="info-label"><i class="ri-phone-line"></i> Teléfono</div>
+            <div class="info-value">+52 472 127 2959</div>
+            <div class="info-detail">Llamadas y WhatsApp</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+ 
+  <section class="contacto" id="contacto">
+    <div class="container">
+      <h2 class="section-title">¿Listo para <span class="accent">Conectar?</span></h2>
+
+      <div class="form-container">
+        <form id="formContacto" novalidate>
+
+        
+          <div style="margin-bottom:22px;">
+            <label style="display:block; font-size:0.9rem; font-weight:600; margin-bottom:12px; text-transform:uppercase; letter-spacing:0.05em;">
+              ¿Qué tipo de servicio te interesa?
+            </label>
+            <div class="servicio-buttons">
+              <button type="button" class="btn-asunto" data-asunto="Compra">
+                <i class="ri-home-heart-line" style="margin-right:6px;"></i> Comprar
+              </button>
+              <button type="button" class="btn-asunto" data-asunto="Venta">
+                <i class="ri-price-tag-3-line" style="margin-right:6px;"></i> Vender
+              </button>
+            </div>
+          </div>
+
+          <input type="hidden" id="asunto" name="asunto" value="" />
+
+          <div class="form-group">
+            <label for="nombre">Nombre Completo</label>
+            <input type="text" id="nombre" name="nombre" required placeholder="Nombre Apellido" />
+          </div>
+
+          <div class="form-group">
+            <label for="correo">Correo Electrónico</label>
+            <input type="email" id="correo" name="correo" required placeholder="tucorreo@email.com" />
+          </div>
+
+          <div class="form-group">
+            <label for="telefono">Teléfono</label>
+            <input type="tel" id="telefono" name="telefono" required placeholder="+52 (000) 000 0000" />
+          </div>
+
+          <div class="form-group">
+            <label for="mensaje">Mensaje</label>
+            <textarea id="mensaje" name="mensaje" required placeholder="Cuéntanos cómo podemos ayudarte..."></textarea>
+          </div>
+
+         
+          <div class="captcha-container">
+            <div class="captcha-title"><i class="ri-shield-check-line"></i> Verificación de Seguridad</div>
+            <div class="captcha-display" id="captchaPregunta">X7gD2</div>
+            <label class="captcha-input-label">Ingresa el código de seguridad:</label>
+            <input type="text" id="captchaRespuesta" name="captchaRespuesta" placeholder="Ej: X7gD2" maxlength="5" required />
+            <div class="captcha-error" id="captchaError">
+              <i class="ri-error-warning-line"></i> Código incorrecto. Intenta nuevamente.
+            </div>
+          </div>
+
+          <div class="form-group">
+            <button type="submit" class="btn btn-submit">
+              <i class="ri-whatsapp-line"></i> Enviar por WhatsApp
+            </button>
+          </div>
+        </form>
+
+        <div class="mensaje-exito" id="mensajeExito">
+          <i class="ri-check-double-line" style="font-size:26px; margin-bottom:8px; display:block;"></i>
+          ¡Redirigiendo a WhatsApp...
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <footer>
+    <div class="container">
+      <div class="footer-logo">Inmobiliaria de la Gente</div>
+
+      <div class="redes-sociales">
+        <a href="https://www.facebook.com/share/18cqTYvyCw/?mibextid=wwXIfr" class="facebook" title="Facebook" aria-label="Facebook">
+          <i class="ri-facebook-fill"></i>
+        </a>
+        <a href="https://www.instagram.com/la_.inmobiliaria?igsh=MXN1bWRvMGl2ZGhjdg==" class="instagram" title="Instagram" aria-label="Instagram">
+          <i class="ri-instagram-line"></i>
+        </a>
+        <a href="https://www.tiktok.com/@alberto.cuellar.33?_r=1&_t=ZS-96wFAXMlx1Y" class="tiktok" title="TikTok" aria-label="TikTok">
+          <i class="ri-tiktok-line"></i>
+        </a>
+      </div>
+
+      <p class="footer-copy">
+        &copy; <span id="anioActual"></span> Inmobiliaria de la Gente. Todos los derechos reservados.
+      </p>
+    </div>
+  </footer>
+
+
+  <script>
+    
+    document.getElementById('anioActual').textContent = new Date().getFullYear();
+
+    
+    const header = document.getElementById('header');
+    window.addEventListener('scroll', () => {
+      header.classList.toggle('scrolled', window.scrollY > 60);
+    });
+
+  
+    const hamburger = document.getElementById('hamburger');
+    const navMobile  = document.getElementById('navMobile');
+    const cerrarMenu = document.getElementById('cerrarMenu');
+
+    hamburger.addEventListener('click', () => {
+      hamburger.classList.add('abierto');
+      navMobile.classList.add('visible');
+      document.body.style.overflow = 'hidden';
+    });
+
+    cerrarMenu.addEventListener('click', cerrarMenuFn);
+    document.querySelectorAll('.nav-mobile-link').forEach(l => l.addEventListener('click', cerrarMenuFn));
+
+    function cerrarMenuFn() {
+      hamburger.classList.remove('abierto');
+      navMobile.classList.remove('visible');
+      document.body.style.overflow = '';
+    }
+
+   
+    const botonesAsunto = document.querySelectorAll('.btn-asunto');
+    const inputAsunto   = document.getElementById('asunto');
+
+    botonesAsunto.forEach(boton => {
+      boton.addEventListener('click', () => {
+        botonesAsunto.forEach(b => b.classList.remove('activo'));
+        boton.classList.add('activo');
+        inputAsunto.value = boton.dataset.asunto;
+      });
+    });
+
+  
+    const observador = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observador.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.animar-entrada').forEach(el => observador.observe(el));
+
+    /* -------------------------------------------------------
+       6. CAPTCHA ALFANUMÉRICO
+    ------------------------------------------------------- */
+    let codigoCorrecto = '';
+
+    function generarCaptcha() {
+      const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      codigoCorrecto = Array.from({ length: 5 }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+      document.getElementById('captchaPregunta').textContent = codigoCorrecto;
+      document.getElementById('captchaRespuesta').value = '';
+    }
+    generarCaptcha();
+
+    
+    const WHATSAPP_NUMERO = '524721272959';   
+
+    document.getElementById('formContacto').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const respuestaUsuario = document.getElementById('captchaRespuesta').value.toUpperCase().trim();
+      const errorCaptcha     = document.getElementById('captchaError');
+
+      if (respuestaUsuario !== codigoCorrecto) {
+        errorCaptcha.style.display = 'block';
+        generarCaptcha();
+        return;
+      }
+      errorCaptcha.style.display = 'none';
+
+      const nombre   = document.getElementById('nombre').value.trim();
+      const correo   = document.getElementById('correo').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const mensaje  = document.getElementById('mensaje').value.trim();
+      const asunto   = inputAsunto.value || 'No especificado';
+
+     
+      const texto = [
+        `👋 *Nuevo contacto desde el sitio web*`,
+        ``,
+        `📌 *Servicio de interés:* ${asunto}`,
+        `👤 *Nombre:* ${nombre}`,
+        `📧 *Correo:* ${correo}`,
+        `📞 *Teléfono:* ${telefono}`,
+        `💬 *Mensaje:*`,
+        mensaje
+      ].join('\n');
+
+      const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(texto)}`;
+
+    
+      const mensajeExito = document.getElementById('mensajeExito');
+      mensajeExito.style.display = 'block';
+
+      setTimeout(() => {
+        window.open(url, '_blank');
+        mensajeExito.style.display = 'none';
+        this.reset();
+        botonesAsunto.forEach(b => b.classList.remove('activo'));
+        inputAsunto.value = '';
+        generarCaptcha();
+      }, 900);
+    });
+
+  
+    document.querySelectorAll('a[href^="#"]').forEach(enlace => {
+      enlace.addEventListener('click', function(e) {
+        const destino = document.querySelector(this.getAttribute('href'));
+        if (destino) {
+          e.preventDefault();
+          cerrarMenuFn();
+          destino.scrollIntoView({ behavior: 'smooth' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
